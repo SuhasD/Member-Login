@@ -15,13 +15,13 @@ import {
 } from "react-native"; 
 
 
-export default class Home extends Component {
+export default class Login extends Component {
 
    componentWillMount() {
    const { navigation } = this.props;
-    const name = navigation.getParam('name', '');
-    const email = navigation.getParam('email', '');
-    const pwd = navigation.getParam('pwd', '');
+    const name = navigation.getParam('name', 'NO-ID');
+    const email = navigation.getParam('email', 'some default value');
+    const pwd = navigation.getParam('pwd', 'some default value');
 
     this.setState({
       name: name,
@@ -29,6 +29,7 @@ export default class Home extends Component {
       pwd:pwd
     })
   }
+
 
   constructor(props, context) {
     super(props, context);
@@ -41,11 +42,11 @@ export default class Home extends Component {
       nameValid:false
     };
     this.checkRegister = this.checkRegister.bind(this);
-    this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
   }
 
 
-  render() { 
+  render() {
     return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.loginContainer}>
@@ -69,51 +70,40 @@ export default class Home extends Component {
 
             <TextInput style = {styles.input}   
               returnKeyType="next" 
-              placeholder='Choose password' 
+              placeholder='Enter password' 
               placeholderTextColor='#000'
               secureTextEntry
               defaultValue={this.state.pwd}
               onChangeText={(pwd) => this.validatePwd(pwd)}/>
 
-             <TextInput style = {styles.input}   
-               autoCorrect={false} 
-               returnKeyType="go" 
-               placeholder='Enter Name' 
-               placeholderTextColor='#000'
-               defaultValue={this.state.name}
-               onChangeText={(name) => this.validateName(name)}/>
-
 
           <TouchableOpacity disabled={!this.checkFlags()}
           style={this.checkFlags() ? styles.formEnable : styles.formDisable}
             onPress={ () => this.checkRegister() }>
-                       <Text  style={styles.buttonText}>REGISTER</Text>
+                       <Text  style={styles.buttonText}>LOGIN</Text>
+                       
           </TouchableOpacity>
 
-              <Button  title="Already a member? Login" onPress={this.login} />
+<Button  title="New to myCrew? Register" onPress={this.register} />
             </View>
        </KeyboardAvoidingView>
     );
   }
 
     checkRegister(evt) {
-     //  alert(this.state.email);
-    //  alert(this.state.pwd);
-    //  alert(this.state.name);
-
-    this.props.navigation.navigate('Details',{
-      name:this.state.name,
-      pwd:this.state.pwd,
-      email:this.state.email
-    })
+     this.props.navigation.navigate('Details',{
+          name:this.state.name,
+          pwd:this.state.pwd,
+          email:this.state.email
+        })
   }
 
-  login(e){
-        this.props.navigation.navigate('Login',{
-      name:this.state.name,
-      pwd:this.state.pwd,
-      email:this.state.email
-    })
+  register(evt) {
+     this.props.navigation.navigate('Home',{
+          name:this.state.name,
+          pwd:this.state.pwd,
+          email:this.state.email
+        })
   }
 
   checkFlags(){
@@ -128,7 +118,7 @@ export default class Home extends Component {
     if(pwd.length > 5){
       this.setState({pwdValid:true});
       this.setState({pwd:pwd});
-      //alert('Pwd valid');
+     // alert('Pwd valid');
     }
   }  
 

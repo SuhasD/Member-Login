@@ -1,6 +1,7 @@
 // import { createStackNavigator } from 'react-navigation';
 import Home from './Home';
 import Friends from './Friends';
+import Login from './Login';
 
 import {
   createStackNavigator,
@@ -12,6 +13,7 @@ const RootStack = createStackNavigator(
   {
     Home: Home,
     Details: Friends,
+    Login: Login,
   },
   {
     initialRouteName: 'Home',
